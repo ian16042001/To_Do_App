@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <div class="row mt-5">
+            <div class="col">
+                <h1 style="font-weight: bold;">WELLCOME</h1>
+                <form action="{% url 'app:add_todo' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="text" class="form-control" placeholder="type here..." required autofocus>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <ul class="list-group">
+                    {% for text in text %}
+                        <li class="list-group-item">{{ text }}
+                            <form action="{% url 'app:remove_todo' text.id %}" >{% csrf_token %}
+                                <button style="float: right;" type="submit" class="btn btn-sm btn-danger">Remove</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>
